@@ -9,7 +9,14 @@ import SingleProduct from "../../components/products/SingleProduct";
 
 const ProductPage:FC<ProductType> = (props) =>{
 
-  return <SingleProduct name={props.name} imgUrl={props.imgUrl} price={props.price} id={props.id} shortDescription={props.shortDescription} description={props.description}/>
+  return <SingleProduct 
+            name={props.name} 
+            imgUrl={props.imgUrl} 
+            price={props.price} 
+            id={props.id} 
+            shortDescription={props.shortDescription} 
+            description={props.description}
+          />
 }
 
 export const getStaticPaths = async () => {

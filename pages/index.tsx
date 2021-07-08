@@ -2,10 +2,9 @@ import { FC } from "react";
 import Hero from "../components/front-page/Hero";
 import CustomSection from "../components/utilites/CustomSection";
 import { CarouselProductModel } from "../models/product";
-import { useUser } from '@auth0/nextjs-auth0';
-import Product, {ProductType} from "../models/product";
-import { GetStaticPropsResult, NextApiResponse, NextApiRequest } from "next";
-import ProductsCarousel from "../components/utilites/ProductsCarousel";
+import Product from "../models/product";
+import { GetStaticPropsResult } from "next";
+import ProductsCarousel from "../components/products/ProductsCarousel";
 import mongoose from 'mongoose';
 import connectDB from "../middleware/mongodb";
 
@@ -28,7 +27,7 @@ export const getStaticProps = async ():Promise<GetStaticPropsResult<HomepageProd
   await connectDB();
   const productsFromDb = await Product.find().limit(10);
   await mongoose.connection.close();
-  console.log(mongoose.connection.readyState);
+  
   const data:CarouselProductModel[] = await productsFromDb.map(doc =>{
     return {
       id: doc._id.toString(),

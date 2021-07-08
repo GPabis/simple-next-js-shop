@@ -1,0 +1,29 @@
+.cartLayout {
+  max-width: 175rem;
+  margin: auto;
+  padding: 4rem 2rem;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  @media (min-width: 1500px) {
+    &__container {
+      margin: 0 20%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    &__container {
+      margin: 0 10%;
+    }
+  }
+
+  @media (min-width: 992px) {
+    &__container {
+      flex-direction: row;
+    }
+  }
+}

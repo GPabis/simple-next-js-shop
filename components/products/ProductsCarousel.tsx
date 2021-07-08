@@ -2,7 +2,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { FC } from "react";
 import { HomepageProducts } from "../../pages";
-import CarouselProduct from "./CarouselProduct";
+import ProductOverview from "./ProductOverview";
 
 
 
@@ -44,7 +44,7 @@ const ProductsCarousel:FC<HomepageProducts> = (props) =>{
   renderButtonGroupOutside={false}
   renderDotsOutside={false}
 >
-  {props.products.map(product => <CarouselProduct key={product.id} {...product}/>)}
+  {props.products.map(product => <ProductOverview key={product.id} {...product}/>)}
   
 </Carousel>;
 }

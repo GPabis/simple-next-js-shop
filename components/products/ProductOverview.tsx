@@ -1,11 +1,11 @@
-import classes from './CarouselProduct.module.scss';
+import classes from './ProductOverview.module.scss';
 import Image from 'next/image';
-import WishlistHeart from './WishlistHeart';
+import WishlistHeart from '../utilites/WishlistHeart';
 import Link from 'next/link';
 import { FC } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 
-type CarouselProductModel = {
+type ProductOverviewModel = {
   name: string,
   id: string,
   imgUrl: string,
@@ -13,7 +13,7 @@ type CarouselProductModel = {
   price: number
 }
 
-const CarouselProduct:FC<CarouselProductModel> = (props) =>{
+const ProductOverview:FC<ProductOverviewModel> = (props) =>{
 
   const {user, error, isLoading} = useUser();
 
@@ -50,4 +50,4 @@ const CarouselProduct:FC<CarouselProductModel> = (props) =>{
   )
 }
 
-export default CarouselProduct;
+export default ProductOverview;

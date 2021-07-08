@@ -1,0 +1,60 @@
+@import "../../styles/variables.scss";
+
+.singleProduct {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+
+  &__imgContainer {
+    flex-basis: 50%;
+    padding-right: 2rem;
+  }
+
+  &__content {
+    margin: 4rem 0;
+    flex-basis: 50%;
+    padding-left: 2rem;
+
+    .singleProduct__title {
+      display: flex;
+      font-size: 3.2rem;
+    }
+
+    .singleProduct__price {
+      color: $primary-color;
+      font-size: 2.5rem;
+    }
+
+    .singleProduct__description {
+      font-size: 1.3rem;
+      strong {
+        font-size: 1.8rem;
+      }
+    }
+
+    .singleProduct__addToCart {
+      margin-top: 2rem;
+      .singleProduct__addAmount {
+        width: 10rem;
+        border: 1px solid $dark-color;
+        border-radius: 0;
+        height: 2.6rem;
+        text-align: center;
+        outline: none;
+      }
+      .singleProduct__addToCart {
+        background: $primary-color;
+        border: 1px solid $dark-color;
+        border-left: none;
+        color: #fff;
+        height: 3rem;
+        cursor: pointer;
+        transition: all 0.4s;
+
+        &:hover {
+          background: $primary-color--hover;
+        }
+      }
+    }
+  }
+}

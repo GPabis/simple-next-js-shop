@@ -9,9 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.4.2",
+    "lorem-ipsum": "^2.0.3",
+    "mongoose": "^5.13.2",
     "next": "11.0.1",
+    "next-auth": "^3.27.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-multi-carousel": "^2.6.3",
+    "request": "^2.88.2",
+    "sass": "^1.35.1"
   },
   "devDependencies": {
     "@types/react": "17.0.13",

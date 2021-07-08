@@ -1,0 +1,100 @@
+.heart- {
+  &stroke {
+    fill: none;
+    stroke: #ddd;
+    stroke-width: 2px;
+    opacity: 1;
+    transform-origin: center center;
+  }
+
+  &full {
+    opacity: 0;
+    transform-origin: 50% 50%;
+  }
+
+  &lines {
+    stroke-width: 2px;
+    display: none;
+  }
+}
+
+.button {
+  &:not(.active) {
+    &:hover {
+      .headt-stroke {
+        animation: pulse 1s ease-out infinite;
+      }
+    }
+  }
+}
+
+.animate {
+  .heart-full {
+    animation: heart 0.35s;
+  }
+  .heart-lines {
+    animation: lines 0.2s ease-out forwards;
+    display: block;
+  }
+}
+
+.active {
+  .heart-stroke {
+    opacity: 0;
+  }
+
+  .heart-full {
+    opacity: 1;
+  }
+}
+
+@keyframes lines {
+  0% {
+    stroke-dasharray: 6;
+    stroke-dashoffset: 16;
+  }
+  100% {
+    stroke-dasharray: 13;
+    stroke-dashoffset: 18;
+  }
+}
+
+@keyframes heart {
+  0% {
+    transform: scale(1);
+    transform-origin: center center;
+    animation-timing-function: ease-out;
+  }
+  10% {
+    transform: scale(1.2);
+    animation-timing-function: ease-in;
+  }
+  35% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  75% {
+    transform: scale(1.1);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform-origin: center center;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

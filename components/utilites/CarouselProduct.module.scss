@@ -1,0 +1,59 @@
+@import "../../styles/variables.scss";
+
+.product {
+  margin: 0 3rem;
+  text-align: center;
+  &__imgContainer {
+    height: 23.6rem;
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    font-size: 1.6rem;
+    color: $dark-color;
+    height: 5rem;
+    text-align: left;
+  }
+
+  &__excerpt {
+    text-align: left;
+    font-size: 1.2rem;
+    color: $dark-color;
+    margin-top: 1rem;
+    height: 17rem;
+  }
+
+  &__btn {
+    display: block;
+    margin: auto;
+    background: $primary-color;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 4.5rem;
+    cursor: pointer;
+    transition: all 0.4s;
+    &:hover {
+      background: $primary-color--hover;
+    }
+  }
+
+  &__price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $primary-color;
+    text-align: left;
+    margin: 1rem 0 0 0;
+  }
+
+  &__link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #333;
+    border-bottom: dotted 2px #333;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+}

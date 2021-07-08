@@ -1,13 +1,23 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse, NextApiRequest} from "next";
+import connectDB from "../../middleware/mongodb";
+import Product from "../../models/product";
+import mongoose from 'mongoose';
 
-type Data = {
-  name: string
+const getProducts = async (req:NextApiRequest,res:NextApiResponse) =>{
+  await connectDB();
+  const productsFromDb = await Product.find();
+  await mongoose.connection.close();
+  const data = await productsFromDb.map(doc =>{
+    return {
+      id: doc._id,
+      name: doc.name,
+      imgUrl: doc.imgUrl,
+      shortDescription: doc.shortDescription,
+      price: doc.price,
+    }
+  })
+  return res.status(200).send(data)
+
 }
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export default getProducts;

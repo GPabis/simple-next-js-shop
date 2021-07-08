@@ -1,0 +1,34 @@
+@import "../../styles/variables.scss";
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  box-shadow: 0 -10px 10px 9px #aaa;
+  padding: 1rem 2rem;
+  height: 11rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  img {
+    cursor: pointer;
+  }
+
+  &__nav {
+    a {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      margin: 0 1rem;
+      color: $dark-color;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.4s;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}

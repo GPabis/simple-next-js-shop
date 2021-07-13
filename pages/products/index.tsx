@@ -19,8 +19,11 @@ const ProductPage:FC<HomepageProducts> = (props) =>{
 
 export const getStaticProps = async ():Promise<GetStaticPropsResult<HomepageProducts>> =>{
   await connectDB();
+  
   const productsFromDb = await Product.find();
+  
   await mongoose.connection.close();
+  
   const data:CarouselProductModel[] = await productsFromDb.map(doc =>{
     return {
       id: doc._id.toString(),

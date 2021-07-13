@@ -34,7 +34,7 @@ const CartProduct:FC = (props) =>{
     <div className={classes.cartProduct__amount}>
       <span>1</span> 
       <div className={classes.cartProduct__amountButtons}>
-        <button className={classes.cartProduct__add} onClick={() => cartCtx.addProduct('60e1daf30b37f58524e97608')}>+</button>
+        <button className={classes.cartProduct__add} onClick={() => cartCtx.addProductHandler('60e1daf30b37f58524e97608')}>+</button>
         <button className={classes.cartProduct__add}>-</button>
       </div>
     </div>

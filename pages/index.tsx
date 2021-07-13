@@ -12,18 +12,18 @@ export type HomepageProducts = {
   products: CarouselProductModel[]
 }
 
-const Home:FC<HomepageProducts>= (props) => {
+const Home:FC<HomepageProducts>= ({ products }) => {
   return (
     <>
       <Hero/>
       <CustomSection title="Najnowsze Produkty" id="products">
-        <ProductsCarousel products={props.products} />
+        <ProductsCarousel products={products} />
       </CustomSection>
     </>
   )
 }
 
-export const getStaticProps = async ():Promise<GetStaticPropsResult<HomepageProducts>> =>{
+export const getStaticProps = async (): Promise<GetStaticPropsResult<HomepageProducts>> => {
   await connectDB();
   const productsFromDb = await Product.find().limit(10);
   await mongoose.connection.close();

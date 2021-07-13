@@ -1,6 +1,5 @@
-import mitt from 'next/dist/next-server/lib/mitt';
-import React, { useState } from 'react';
-import {ProductType} from '../models/product';
+import React, { useState, useEffect } from 'react';
+import useLocalStorage from '../hooks/use-local-storage';
 
 type CartProduct = {
   productId: string,
@@ -16,17 +15,20 @@ type CartProducts = {
 }
 
 type CartContextProps = {
-  cart: CartProducts | null,
-  addProduct: (productId: string, amount?:number) => void ,
-  removeProduct: (productId: string) => void,
-  deleteProduct: (productId: string) => void,
+  cart: CartProducts,
+  addProductHandler: (productId: string, amount?:number) => void ,
+  removeProductHandler: (productId: string) => void,
+  deleteProductHandler: (productId: string) => void,
 }
 
 export const CartContext = React.createContext<CartContextProps>({
-  cart: null,
-  addProduct: () => {},
-  removeProduct: () => {},
-  deleteProduct: () => {},
+  cart: {
+    productInCart: [],
+    totalPrice: 0,
+  },
+  addProductHandler: () => {},
+  removeProductHandler: () => {},
+  deleteProductHandler: () => {},
 });
 
 const fetchProductFromDB = async (id: string) => {
@@ -45,72 +47,71 @@ const fetchProductFromDB = async (id: string) => {
 const CartContextProvider:React.FC = ({children}) =>{
 
   const [cart, setCart] = useState<CartContextProps>({
-    cart: null,
-    addProduct: () => {},
-    removeProduct: () => {},
-    deleteProduct: () => {},
+    cart: {
+      productInCart: [],
+      totalPrice: 0,
+    },
+    addProductHandler: () => {},
+    removeProductHandler: () => {},
+    deleteProductHandler: () => {},
   })
 
-  let localstorageCart;
+  const [localStorageCart, setLocalStorageCart] = useLocalStorage<CartProducts>('cart', {
+    productInCart: [],
+    totalPrice: 0,
+  })
 
-  if (typeof window !== "undefined") {
-    localstorageCart = localStorage.getItem('simpleShopCart');
-  }
-
-
-  if(localstorageCart) {
-    const cartObject = JSON.parse(localstorageCart) as CartProducts;
+  useEffect(() =>{
+    const cartObject = localStorageCart;
     const newCart = {...cart, cart: cartObject};
+    setCart(newCart);
+  },[])
+
+  const updateLocalStorageCart = () => setLocalStorageCart(() => cart.cart);
+
+  const updateAmountOfExistingProduct = (amount: number, itemIndex: number) => {
+    const newCart = {...cart}      
+    newCart.cart.productInCart[itemIndex].amount += amount;
+    newCart.cart.totalPrice += newCart.cart.productInCart[itemIndex].price * amount;
     setCart(newCart);
   }
 
-  const addProduct = async (id:string ,amount?: number) =>{
-    let indexOfProductInCart: number | undefined;
-    let amountToAdd = amount || 1;
-    if(cart.cart){
-      indexOfProductInCart = cart.cart.productInCart.findIndex(product => product.productId === id);
-
-      if(indexOfProductInCart >= 0){
-        const newCart = {...cart}
-        if(newCart.cart?.productInCart) {
-          newCart.cart.productInCart[indexOfProductInCart].amount += amountToAdd;
-          newCart.cart.totalPrice += newCart.cart.productInCart[indexOfProductInCart].price * amountToAdd;
-        }
-        setCart(newCart);
-        return;
-      }
-    } 
-
-    if(!indexOfProductInCart || indexOfProductInCart < 0){
+  const addProductHandler = async (id:string ,amount?: number) =>{
+    let indexOfProductInCart: number;
+    const amountToAdd = amount || 1;
+    indexOfProductInCart = cart.cart.productInCart.findIndex(product => product.productId === id);
+    if(indexOfProductInCart !== -1){
+      updateAmountOfExistingProduct(amountToAdd, indexOfProductInCart);
+      updateLocalStorageCart()
+      return;
+    }
+    
+    if(indexOfProductInCart === -1){
       const productInCart = await fetchProductFromDB(id);
-      productInCart.amount = amountToAdd;
+      const priceOfNewProduct = productInCart.price * amountToAdd;
       const newCart = {...cart};
-      if(newCart.cart){
-        newCart.cart.productInCart = [...newCart.cart.productInCart, productInCart];
-        newCart.cart.totalPrice += productInCart.price * amountToAdd;
-      } else{
-        newCart.cart = {
-          productInCart: [productInCart],
-          totalPrice: productInCart.price * amountToAdd,
-        }
-      }
+      productInCart.amount = amountToAdd;
+      const updatedCartProducts = [...newCart.cart.productInCart, productInCart];    
+      newCart.cart.productInCart = updatedCartProducts;
+      newCart.cart.totalPrice += priceOfNewProduct;
       setCart(newCart);
+      updateLocalStorageCart();
     }
   }
 
-  const removeProuct = () => {
+  const removeProductHandler = () => {
     
   }
 
-  const deleteProduct = () => {
+  const deleteProductHandler = () => {
 
   }
 
   const contextValues:CartContextProps = {
     cart: cart.cart,
-    addProduct: addProduct,
-    removeProduct: removeProuct,
-    deleteProduct: deleteProduct,
+    addProductHandler: addProductHandler,
+    removeProductHandler: removeProductHandler,
+    deleteProductHandler: deleteProductHandler,
   }
 
 

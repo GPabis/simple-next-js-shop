@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useLocalStorage from '../hooks/use-local-storage';
 
-type CartProduct = {
+export type CartProduct = {
   productId: string,
   productName: string,
   productImg: string,
@@ -56,10 +56,7 @@ const CartContextProvider:React.FC = ({children}) =>{
     deleteProductHandler: () => {},
   })
 
-  const [localStorageCart, setLocalStorageCart] = useLocalStorage<CartProducts>('cart', {
-    productInCart: [],
-    totalPrice: 0,
-  })
+  const [localStorageCart, setLocalStorageCart] = useLocalStorage<CartProducts>('cart', cart.cart);
 
   useEffect(() =>{
     const cartObject = localStorageCart;

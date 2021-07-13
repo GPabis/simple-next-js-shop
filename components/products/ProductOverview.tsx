@@ -2,7 +2,8 @@ import classes from './ProductOverview.module.scss';
 import Image from 'next/image';
 import WishlistHeart from '../utilites/WishlistHeart';
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { CartContext } from '../../store/cart-context';
 import { useUser } from '@auth0/nextjs-auth0';
 
 type ProductOverviewModel = {
@@ -16,6 +17,7 @@ type ProductOverviewModel = {
 const ProductOverview:FC<ProductOverviewModel> = (props) =>{
 
   const {user, error, isLoading} = useUser();
+  const cartCtx = useContext(CartContext);
 
   return (
     <div className={classes.product}>
@@ -38,7 +40,7 @@ const ProductOverview:FC<ProductOverviewModel> = (props) =>{
       </p>
 
       {user && 
-      <button className={classes.product__btn}>
+      <button className={classes.product__btn} onClick={() => cartCtx.addProductHandler(props.id)}>
         Add to cart
       </button>}
 

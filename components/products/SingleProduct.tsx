@@ -1,11 +1,12 @@
 import classes from './SingleProduct.module.scss';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import Image  from 'next/image';
 import { ProductType } from '../../models/product';
 import WishlistHeart from '../utilites/WishlistHeart';
+import { CartContext } from '../../store/cart-context';
 
 const SingleProduct:FC<ProductType> = (props) =>{
-
+  const cartCtx = useContext(CartContext);
 
   return <div className={classes.singleProduct}>
     <div className={classes.singleProduct__imgContainer}>
@@ -19,8 +20,9 @@ const SingleProduct:FC<ProductType> = (props) =>{
         {props.description.split(/\r?\n/)}
       </p>
       <div className={classes.singleProduct__addToCart}>
-        <input type="number" placeholder='Amount' value={1} className={classes.singleProduct__addAmount} />
-        <button className={classes.singleProduct__addToCart}>Add to cart</button>
+        {/* <input type="number" placeholder='Amount' className={classes.singleProduct__addAmount} /> */}
+        {/* Temporary Left props.id || '' - it will be reapered in future commit */}
+        <button className={classes.singleProduct__addToCart} onClick={() => cartCtx.addProductHandler(props.id || '')}>Add to cart</button>
       </div>
     </div>
   </div>

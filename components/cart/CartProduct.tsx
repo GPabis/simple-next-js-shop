@@ -1,40 +1,40 @@
 import classes from './CartProduct.module.scss';
 import { FC, useContext } from 'react';
 import Image from 'next/image';
-import { CartContext } from '../../store/cart-context';
+import { CartContext, CartProduct as CartProductType } from '../../store/cart-context';
+import Link  from 'next/link';
 
 
-const CartProduct:FC = (props) =>{
+const CartProduct:FC<CartProductType> = (props) =>{
   const cartCtx = useContext(CartContext);
-
-  console.log(cartCtx.cart);
-
 
   return <div className={classes.cartProduct}>
 
   {/* Props.url , Props.Img, Dostosować wielkość obrazka */}
   <div className={classes.cartProduct__imgContainer}>
-    <a href="#">
-      <Image src="https://i.ibb.co/wgLjBn9/product6.jpg" height={136} width={150}/>
-    </a>
+    <Link href={`/products/${props.productId}`}>
+      <Image src={props.productImg} height={136} width={150}/>
+    </Link>
   </div>
 
   {/* Props.name, props.price, props.url */}
   <div className={classes.cartProduct__info}>
     <h4 className={classes.cartProduct__name}>
-      <a href="" className={classes.cartProduct__nameLink}>Lorem ipsum amath</a>
+      <Link href={`/products/${props.productId}`}>
+        <span className={classes.cartProduct__nameLink}>{props.productName}</span>
+      </Link>
     </h4>
     <p className={classes.cartProduct__price}>
-      999 zł
+      {props.price}
     </p>
   </div>
 
   {/* Ilość produktów z bazy */}
   <div className={classes.cartProduct__amountContainer}>
     <div className={classes.cartProduct__amount}>
-      <span>1</span> 
+      <span>{props.amount}</span> 
       <div className={classes.cartProduct__amountButtons}>
-        <button className={classes.cartProduct__add} onClick={() => cartCtx.addProductHandler('60e1daf30b37f58524e97608')}>+</button>
+        <button className={classes.cartProduct__add} onClick={() => cartCtx.addProductHandler(props.productId)}>+</button>
         <button className={classes.cartProduct__add}>-</button>
       </div>
     </div>
